@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="icon" type="image/x-icon" href="/255_Project/Gallery/images/favicon.png">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/secuela-variable" type="text/css"/>
+    <style>
+        
+
+body {
+    margin: 0;
+    font-family:'SecuelaRegular';
+    font-weight: normal;
+    font-style: normal;
+}
+.header {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 20px;
+    background: #1abc9c;
+    color: white;
+}
+.header-item {
+    font-size: 20px;
+    flex: 1;
+    text-align: center;
+}
+.header-item a {
+    color: white;
+    text-decoration: none;
+}
+.header .cart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    color: #daa16f;
+}
+.header .cart img {
+    width: 30px;
+    height: 30px;
+}
+.header .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 2;
+}
+.header .search-container input[type="text"] {
+    width: 80%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    border-right: none;
+}
+.header .search-container input[type="submit"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 0 4px 4px 0;
+    background-color: #ccc;
+    cursor: pointer;
+}
+.header .search-container input[type="submit"]:hover {
+    background-color: #aaa;
+}
+div.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+}
+div.sub {
+    margin-bottom: 10px;
+    border: 1px solid blue;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+div.desc {
+    font-weight: bold;
+    font-size: 30px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+img {
+    width: 300px;
+    height: 400px;
+    margin: 5px 20px;
+}
+
+@media (max-width: 600px) {
+    nav ul {
+        text-align: center;
+    }
+    nav ul li {
+        display: block;
+        margin-top: 10px;
+    }
+}
+    </style>
+    <script>
+        function Books(name, price, img) {
+            this.name = name;
+            this.price = price;
+            this.img = img;
+            this.display = function(selectedType, index) {
+                var output = "<div>";
+                output += "<img src='images/" + this.img + "'/><br>";
+                output += this.name;
+                output += "<br><b>$" + this.price + "</b>";
+                output += `<br><input type='button' value='Description' onClick='hideShow("desc${index}")'></input>`;
+                output += `<div id='desc${index}' style='visibility: hidden;'>Description of the book goes here.</div>`;
+                output += `<input type='button' value='Add to Cart' onClick='handleClick(${index})'></input>`;
+                output += "</div>";
+                return output;
+            }
+        }
+
+        var book = [
+            new Books("Of Mice and Men", 11.95, "MiceandMen.jpg"),
+            new Books("Born A Crime", 20, "BornAcrime.jpg"),
+            new Books("Gordon Ramsay’s Home Cooking", 10, "GordonRamsey.jpg"),
+            new Books("Why Nations Fail", 25, "WhyNationsFail.jpg"),
+            new Books("In Cold Blood", 15, "InColdBlood.jpg"),
+            new Books("The Shining", 11, "TheShining.jpg"),
+            new Books("The Catcher in the Rye", 11.95, "TheCatcherInTheRye.jpg"),
+            new Books("The Master of Margarita", 20, "TheMasterOfMargarita.jpg"),
+            new Books("The Lord of the Rings", 10, "TheLordOfTheRings.jpg"),
+            new Books("Dune", 25, "Dune.jpg"),
+            new Books("Catch-22", 15, "Catch22.jpg"),
+            new Books("Anna Karenina", 11, "AnnaKarenina.jpg")
+        ];
+
+        function handleClick(index) {
+            var selectedBook = book[index];
+            var cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+            if (cart[selectedBook.name]) {
+                cart[selectedBook.name].quantity += 1;
+            } else {
+                cart[selectedBook.name] = { price: selectedBook.price, quantity: 1 };
+            }
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            alert(selectedBook.name + ' added to cart! The quantity of this book is: ' + cart[selectedBook.name].quantity);
+        }
+
+        function updateCartCount() {
+            var cart = JSON.parse(localStorage.getItem('cart')) || {};
+            var totalCount = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+            var resultCounter = document.getElementById("result");
+            resultCounter.innerText = totalCount;
+        }
+
+        function searchBooks() {
+            var input = document.getElementById('searchInput').value.trim().toLowerCase();
+
+            if (!input) {
+                alert('Please input a book title to search.');
+                return;
+            }
+
+            var found = false;
+
+            for (var i = 0; i < book.length; i++) {
+                if (book[i].name.toLowerCase().includes(input)) {
+                    alert('Book with title "' + book[i].name + '" exists.');
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                alert('No book found with the given title.');
+            }
+
+            document.getElementById('searchInput').value = '';
+        }
+
+        window.onload = function() {
+            updateCartCount();
+            document.getElementById('searchInput').addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                    searchBooks();
+                }
+            });
+        };
+
+        function hideShow(descId) {
+            var x = document.getElementById(descId);
+            if (x.style.visibility === 'hidden') {
+                x.style.visibility = 'visible';
+            } else {
+                x.style.visibility = 'hidden';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+      document.getElementById('welcomeMessage').textContent += loggedInUser + '!';
+
+  });
+
+    </script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-item"><a href="mainPage.html">Main Page</a></div>
+        <div class="header-item" id="username">
+            <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const loggedInUser = localStorage.getItem('loggedInUser');
+            document.getElementById('username').textContent= loggedInUser;})
+        </script></div>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search..">
+            <input type="submit" value="Submit" onclick="searchBooks()">
+        </div>
+
+        <div class="header-item cart">
+            <span id="result">0</span>
+            <a href="cart.html"><img id="res" src="images/cart.webp" alt="Cart"></a>
+        </div>
+    </div>
+    <div class="main">
+        <script>
+            var m = 0;
+            for (var i = 1; i <= 4; i++) {
+                document.write("<div class='sub'>");
+                for (var j = 1; j <= 3; j++) {
+                    document.write(book[m].display(null, m));
+                    m++;
+                }
+                document.write("</div>");
+            }
+        </script>
+    </div>
+</body>
+</html>

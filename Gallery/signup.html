@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up</title>
+  <link rel="icon" type="image/x-icon" href="/255_Project/Gallery/images/favicon.png">
+  <link rel="stylesheet" href="registration.css">
+    
+  <style>
+     .signup-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+  }
+  .signupMessage {
+    color: red;
+  }
+  
+  </style>
+</head>
+
+
+<header>
+  <h1><a href="mainPage.html" style="color: inherit; text-decoration: none;">Welcome to Our Online Bookstore</a></h1>
+
+</header>
+
+<body>
+  <div class="container">
+    <div class="signup-container">
+      <h2>Sign Up</h2>
+      <form id="signupForm">
+        <input type="text" id="newUsername" placeholder="Username" required>
+        <input type="password" id="newPassword" placeholder="Password" required>
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+        <button type="submit">Sign Up</button>
+      </form>
+      <p id="signupMessage" class="signupMessage"></p>
+    </div>
+  </div>
+  <script src="signup.js"></script>
+</body>
+
+<footer>
+    <p>© 2024 Online Bookstore. All rights reserved.</p>
+</footer>
+
+<script>
+    
+document.addEventListener('DOMContentLoaded', (event) => {
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+  
+    const signupForm = document.getElementById("signupForm");
+    if (signupForm) {
+      signupForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+  
+        const newUsername = document.getElementById("newUsername").value;
+        const newPassword = document.getElementById("newPassword").value;
+        const confirmPassword = document.getElementById("confirmPassword").value;
+
+        
+        if (users.find(user => user.username === newUsername)) {
+          document.getElementById("signupMessage").textContent = "Username already exists.";
+          document.getElementById("newUsername").value = "";
+          document.getElementById("newPassword").value = "";
+          document.getElementById("confirmPassword").value = "";
+          return;
+        }
+  
+        if (newPassword !== confirmPassword) {
+          document.getElementById("signupMessage").textContent = "Passwords do not match.";
+          document.getElementById("newPassword").value = "";
+          document.getElementById("confirmPassword").value = "";
+          return;
+        }
+        
+        document.getElementById("signupMessage").textContent = "";
+
+        users.push({ username: newUsername, password: newPassword });
+        localStorage.setItem('users', JSON.stringify(users));
+        document.getElementById("signupMessage").textContent = "Sign up successful! You can now login.";
+  
+        document.getElementById("newUsername").value = "";
+        document.getElementById("newPassword").value = "";
+        document.getElementById("confirmPassword").value = "";
+  
+        setTimeout(function() {
+          window.location.href = "login.html";
+        }, 2000); 
+      });
+    }
+  });
+  
+  </script>
+
+</html>

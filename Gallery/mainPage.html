@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Bookstore</title>
+    <link rel="icon" type="image/x-icon" href="/255_Project/Gallery/images/favicon.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="/255_Project/Gallery/materialize/css/materialize.css"  media="screen,projection"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+        
+
+html, body {
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; 
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    background-color: #16a085;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+
+main {
+    flex: 1;  
+    padding: 20px;
+    background: white;
+    margin: 20px; 
+}
+
+footer {
+    text-align: center;
+    padding: 10px 20px;
+    background: #333;
+    color: white;
+    width: 100%;
+}
+#main_display{
+    display: flex;
+}
+
+
+@media (max-width: 600px) {
+    nav ul {
+        text-align: center;
+    }
+    nav ul li {
+        display: block;
+        margin-top: 10px;
+    }
+}
+
+ </style>
+    </head>
+
+<body>
+    <header>
+        <h1>Welcome to Our Online Bookstore</h1>
+        <nav>
+            <ul style="display: flex; justify-content: center;">
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Sign Up</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>About us</h2>
+            <div id="main_display">
+                <p>Whether you're a fan of thrilling mysteries, enchanting fantasies, poignant romances, or insightful non-fiction,<br> Book Haven has something for everyone. Our carefully curated selection includes bestsellers, classics, indie publications, and the latest releases from renowned authors and emerging voices alike.
+                <br><span style="margin-top: 10px; margin-bottom: 10px; font-weight: bold;" >Personalized Recommendations</span> <br>
+                We understand that finding the perfect book can sometimes be overwhelming. That's why our intuitive recommendation system helps you discover new favorites based on your reading history and preferences. Explore tailored suggestions that align with your interests and broaden your literary horizons.<br>
+                <br><span style="margin-top: 10px; margin-bottom: 10px; font-weight: bold;" >Exclusive Deals and Discounts</span> <br>
+                At Book Haven, we believe in making reading affordable. Enjoy exclusive deals, discounts, and seasonal promotions that make building your dream library easier than ever. Plus, join our loyalty program to earn points with every purchase, redeemable for future discounts and special offers.<br>    
+            </p>
+                <img src="images/booksMain.webp">
+            </div>
+            
+            
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 Online Bookstore. All rights reserved.</p>
+    </footer>
+
+    <script type="text/javascript" src="../Gallery/materialize/js/materialize.min.js></script>
+</body>
+</html>
